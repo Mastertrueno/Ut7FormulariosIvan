@@ -1,0 +1,22 @@
+#categories{
+    margin-top: 10%;
+}
+img{
+    height: 280px;
+    width: 220px;
+}
+body{
+    background-color: bisque;
+}
+div{
+    text-align: center;
+}
+h1{
+    margin: 20px;
+}
+.nav-item{
+    margin: 10px;
+}
+figcaption{
+    text-align: center;
+}
