@@ -180,7 +180,11 @@ class VideoSystemController {
         this.onAddCategory();
         history.replaceState({ action: 'init' }, null);
         this.#VideoSystemView.showAdminMenu();
-        this.#VideoSystemView.bindAdminMenu(this.handleNewProductionForm);
+        this.#VideoSystemView.bindAdminMenu(this.handleNewProductionForm, this.handleRemoveCategoryForm,this.handleNewActorForm);
+        this.#VideoSystemView.bindAdminMenu(this.handleNewCategoryForm, this.handleRemoveCategoryForm,this.handleNewActorForm);
+        this.#VideoSystemView.bindAdminMenu(this.handleNewCategoryForm, this.handleRemoveCategoryForm,this.handleNewActorForm);
+        /*  this.#VideoSystemView.bindNewCategoryForm(this.handleCreateCategory);
+         this.#VideoSystemView.bindNewCategoryForm(handler)(newCategoryValidation(handler)) */
     }
     onInit = () => {
         // this.#VideoSystemView.ListCategories();
@@ -194,7 +198,7 @@ class VideoSystemController {
             this.handleProduction
         );
         history.replaceState({ action: 'init' }, null);
-        this.#VideoSystemView.bindAdminMenu(this.handleNewProductionForm);
+        this.#VideoSystemView.bindAdminMenu(this.handleNewProductionForm, this.handleRemoveCategoryForm,this.handleNewActorForm);
 
     }
 
@@ -224,8 +228,8 @@ class VideoSystemController {
         this.#VideoSystemView.bindDirectorListInMenu(
             this.handleDirectorList
         );
-        this.#VideoSystemView.bindAdminMenu(this.handleNewProductionForm);
-
+        this.#VideoSystemView.bindAdminMenu(this.handleNewProductionForm, this.handleRemoveCategoryForm,this.handleNewActorForm);
+        this.#VideoSystemView.showCategoriesInMenu(this.#Videosystem.categories);
     }
 
     handleProductsTypeList = (type) => {
@@ -723,8 +727,47 @@ class VideoSystemController {
             this.#VideoSystemView.showProductInNewWindow(null, 'No existe este producto en la página.');
         }
     }
-    handleNewProductionForm = () => { 
-        this.#VideoSystemView.showNewProductionForm();
-     }
+    handleNewProductionForm = () => {
+        this.#VideoSystemView.showNewCategoryForm();
+        //        this.#VideoSystemView.bindNewCategoryForm(handler)(newCategoryValidation(handler));
+        this.#VideoSystemView.bindNewCategoryForm(this.handleCreateCategory);
+    }
+    handleNewActorForm = () => {
+        this.#VideoSystemView.showNewCategoryForm();
+        //        this.#VideoSystemView.bindNewCategoryForm(handler)(newCategoryValidation(handler));
+        this.#VideoSystemView.bindNewCategoryForm(this.handleCreateCategory);
+    }
+    handleCreateCategory = (title, nacionality, publication, synopsis, img, resource, location) => {
+        let mov = new Movie(title, nacionality, publication, synopsis, img, resource, location);
+        let done, error;
+        try {
+            this.#Videosystem.addProduction(mov);
+            done = true;
+        } catch (exception) {
+            done = false; error = exception;
+        }
+        this.#VideoSystemView.showNewCategoryModal(done, mov, error);
+        this.onAddCategory();
+    }
+    handleRemoveCategoryForm = () => {
+        this.#VideoSystemView.showRemoveCategoryForm(this.#Videosystem.categories);
+        this.#VideoSystemView.bindRemoveCategoryForm(this.handleRemoveCategory);
+    }
+    handleRemoveCategory = (title, position) => {
+        let done, error, cat;
+        try {
+            cat = this.#Videosystem.getCategory(title);
+            this.#Videosystem.removeCategory(cat);
+            done = true;
+            this.onAddCategory();
+        } catch (exception) {
+            done = false;
+            error = exception;
+        }
+        this.#VideoSystemView.showRemoveCategoryModal(done, cat, position, error);
+    }
+    handleNewCategoryForm = () => {
+        this.#VideoSystemView.showNewCategoryForm();
+    }
 }
 export default VideoSystemController;
