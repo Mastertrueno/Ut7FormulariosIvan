@@ -180,11 +180,9 @@ class VideoSystemController {
         this.onAddCategory();
         history.replaceState({ action: 'init' }, null);
         this.#VideoSystemView.showAdminMenu();
-        this.#VideoSystemView.bindAdminMenu(this.handleNewProductionForm, this.handleRemoveCategoryForm,this.handleNewActorForm);
-        this.#VideoSystemView.bindAdminMenu(this.handleNewCategoryForm, this.handleRemoveCategoryForm,this.handleNewActorForm);
-        this.#VideoSystemView.bindAdminMenu(this.handleNewCategoryForm, this.handleRemoveCategoryForm,this.handleNewActorForm);
-        /*  this.#VideoSystemView.bindNewCategoryForm(this.handleCreateCategory);
-         this.#VideoSystemView.bindNewCategoryForm(handler)(newCategoryValidation(handler)) */
+        this.#VideoSystemView.bindAdminMenu(this.handleNewCategoryForm, this.handleRemoveCategoryForm, this.handleNewProductionForm, this.handleNewActorForm);
+        this.#VideoSystemView.bindNewCategoryForm(this.handleCreateCategory);
+        this.#VideoSystemView.bindNewCategoryForm(newCategoryValidation());
     }
     onInit = () => {
         // this.#VideoSystemView.ListCategories();
@@ -198,7 +196,7 @@ class VideoSystemController {
             this.handleProduction
         );
         history.replaceState({ action: 'init' }, null);
-        this.#VideoSystemView.bindAdminMenu(this.handleNewProductionForm, this.handleRemoveCategoryForm,this.handleNewActorForm);
+        this.#VideoSystemView.bindAdminMenu(this.handleNewCategoryForm, this.handleRemoveCategoryForm, this.handleNewProductionForm, this.handleNewActorForm);
 
     }
 
@@ -228,7 +226,7 @@ class VideoSystemController {
         this.#VideoSystemView.bindDirectorListInMenu(
             this.handleDirectorList
         );
-        this.#VideoSystemView.bindAdminMenu(this.handleNewProductionForm, this.handleRemoveCategoryForm,this.handleNewActorForm);
+        this.#VideoSystemView.bindAdminMenu(this.handleNewCategoryForm, this.handleRemoveCategoryForm, this.handleNewProductionForm, this.handleNewActorForm);
         this.#VideoSystemView.showCategoriesInMenu(this.#Videosystem.categories);
     }
 
@@ -728,16 +726,16 @@ class VideoSystemController {
         }
     }
     handleNewProductionForm = () => {
-        this.#VideoSystemView.showNewCategoryForm();
-        //        this.#VideoSystemView.bindNewCategoryForm(handler)(newCategoryValidation(handler));
-        this.#VideoSystemView.bindNewCategoryForm(this.handleCreateCategory);
+        this.#VideoSystemView.showNewPeliculaForm();
+        this.#VideoSystemView.bindNewProductForm(handler)(newPeliValidation(handler));
+        this.#VideoSystemView.bindNewProductForm(this.handleCreatePelicula);
     }
     handleNewActorForm = () => {
-        this.#VideoSystemView.showNewCategoryForm();
-        //        this.#VideoSystemView.bindNewCategoryForm(handler)(newCategoryValidation(handler));
+        this.#VideoSystemView.showNewActorForm();
+        this.#VideoSystemView.bindNewCategoryForm(handler)(newCategoryValidation(handler));
         this.#VideoSystemView.bindNewCategoryForm(this.handleCreateCategory);
     }
-    handleCreateCategory = (title, nacionality, publication, synopsis, img, resource, location) => {
+    handleCreatePelicula = (title, nacionality, publication, synopsis, img, resource, location) => {
         let mov = new Movie(title, nacionality, publication, synopsis, img, resource, location);
         let done, error;
         try {
@@ -748,6 +746,17 @@ class VideoSystemController {
         }
         this.#VideoSystemView.showNewCategoryModal(done, mov, error);
         this.onAddCategory();
+    }
+    handleCreateCategory = (title, desc) => {
+        let cat = new Category(title, desc);
+        cat.description = desc; let done, error;
+        try {
+            this.#Videosystem.addCategory(cat);
+            done = true;
+        } catch (exception) {
+            done = false; error = exception;
+        }
+        this.#VideoSystemView.showNewCategoryModal(done, cat, error);
     }
     handleRemoveCategoryForm = () => {
         this.#VideoSystemView.showRemoveCategoryForm(this.#Videosystem.categories);

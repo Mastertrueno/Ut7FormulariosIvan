@@ -17,8 +17,70 @@ function defaultCheckElement(event) {
     }
 }
 
+function newPeliValidation(handler) {
+    let form = document.forms.fNewFormPelicula;
+    console.log(handler);
+    console.log(form);
+    $(form).attr('novalidate', true);
+    $(form).submit(function (event) {
+        let isValid = true;
+        let firstInvalidElement = null;
+        this.ncSynopsis.value = this.ncSynopsis.value.trim();
+        showFeedBack($(this.ncSynopsis), true);
+        if (!this.ncNacionalidad.checkValidity()) {
+            isValid = false; showFeedBack($(this.ncNacionalidad), false);
+            firstInvalidElement = this.ncNacionalidad;
+        } else {
+            showFeedBack($(this.ncNacionalidad), true);
+        }
+        if (!this.ncTitle.checkValidity()) {
+            isValid = false;
+            showFeedBack($(this.ncTitle), false);
+            firstInvalidElement = this.ncTitle;
+        } else {
+            showFeedBack($(this.ncTitle), true);
+        }
+        if (!this.ncPublication.checkValidity()) {
+            isValid = false;
+            showFeedBack($(this.ncPublication), false);
+            firstInvalidElement = this.ncPublication;
+        } else {
+            showFeedBack($(this.ncPublication), true);
+        }
+        if (!this.ncImagen.checkValidity()) {
+            isValid = false;
+            showFeedBack($(this.ncImagen), false);
+            firstInvalidElement = this.ncImagen;
+        } else {
+            showFeedBack($(this.ncImagen), true);
+        }
+        if (!this.ncLink.checkValidity()) {
+            isValid = false;
+            showFeedBack($(this.ncLink), false);
+            firstInvalidElement = this.ncLink;
+        } else {
+            showFeedBack($(this.ncLink), true);
+        }
+        if (!isValid) {
+            firstInvalidElement.focus();
+        } else {
+            handler(this.ncTitle.value, this.ncNacionalidad.value, this.ncPublication.value, this.ncImagen.value, this.ncLink.value, this.ncSynopsis.value);
+        } 
+        event.preventDefault();
+        event.stopPropagation();
+    });
+    form.addEventListener('reset', (function (event) {
+        let feedDivs = $(this).find('div.valid-feedback, div.invalid-feedback');
+        feedDivs.removeClass('d-block').addClass('d-none');
+        let inputs = $(this).find('input'); inputs.removeClass('is-valid is-invalid');
+    }));
+    $(form.ncTitle).change(defaultCheckElement);
+    $(form.ncNacionalidad).change(defaultCheckElement);
+}
 function newCategoryValidation(handler) {
-    let form = document.forms.fNewCategory;
+    console.log(document.forms);
+    let form = $(document).find("#fNewCategory");
+    console.log(handler);
     console.log(form);
     $(form).attr('novalidate', true);
     $(form).submit(function (event) {
@@ -26,12 +88,7 @@ function newCategoryValidation(handler) {
         let firstInvalidElement = null;
         this.ncDescription.value = this.ncDescription.value.trim();
         showFeedBack($(this.ncDescription), true);
-        if (!this.ncUrl.checkValidity()) {
-            isValid = false; showFeedBack($(this.ncUrl), false);
-            firstInvalidElement = this.ncUrl;
-        } else {
-            showFeedBack($(this.ncUrl), true);
-        }
+
         if (!this.ncTitle.checkValidity()) {
             isValid = false;
             showFeedBack($(this.ncTitle), false);
@@ -46,11 +103,11 @@ function newCategoryValidation(handler) {
         } event.preventDefault();
         event.stopPropagation();
     });
-    form.addEventListener('reset', (function (event) {
+    /* form.addEventListener('reset', (function (event) {
         let feedDivs = $(this).find('div.valid-feedback, div.invalid-feedback');
         feedDivs.removeClass('d-block').addClass('d-none');
         let inputs = $(this).find('input'); inputs.removeClass('is-valid is-invalid');
-    }));
+    })); */
     $(form.ncTitle).change(defaultCheckElement);
     $(form.ncUrl).change(defaultCheckElement);
 }

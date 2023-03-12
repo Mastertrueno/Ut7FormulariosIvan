@@ -739,23 +739,26 @@ class VideoSystemgerView {
 		Administración </a> 
 		</li>`);
 		let container = $(`<div class="dropdown-menu" aria-labelledby="navAdmin"> 
-		 <a id="lnewCategory" class="dropdown-item" href="#new-category">Crear categoría</</a> 
-		 <a id="ldelCategory" class="dropdown-item" href="#new-category">Eliminar categoría</a> 
-		 <a id="lnewProduct" class="dropdown-item" href="#new-product">Crear producto</a>
-		  <a id="ldelProduct" class="dropdown-item" href="#new-product">Eliminar producto</a> 
-		  <a id="lnewActor" class="dropdown-item" href="#new-actor">Crear actor</a>
-		  <a id="ldelActor" class="dropdown-item" href="#new-actor">Eliminar actor</a>
-		  <a id="lnewDirector" class="dropdown-item" href="#new-director">Crear Director</a>
-		  <a id="ldelDirector" class="dropdown-item" href="#new-director">Eliminar director</a>
-		  </div>`);
+			<a id="lnewCategory" class="dropdown-item" href="#new-category">Crear categoría</</a> 
+			<a id="ldelCategory" class="dropdown-item" href="#new-category">Eliminar categoría</a> 
+			<a id="lnewPelicula" class="dropdown-item" href="#new-product">Crear pelicula</a>
+			<a id="ldelPelicula" class="dropdown-item" href="#new-product">Eliminar pelicula</a> 
+			<a id="lnewSerie" class="dropdown-item" href="#new-product">Crear serie</a>
+			<a id="ldelSerie" class="dropdown-item" href="#new-product">Eliminar serie</a> 
+			<a id="lnewActor" class="dropdown-item" href="#new-actor">Crear actor</a>
+			<a id="ldelActor" class="dropdown-item" href="#new-actor">Eliminar actor</a>
+			<a id="lnewDirector" class="dropdown-item" href="#new-director">Crear Director</a>
+			<a id="ldelDirector" class="dropdown-item" href="#new-director">Eliminar director</a>
+		</div>`);
 		li.append(container); this.menu.append(li);
 	}
 
-	showNewProductionForm() {
+	showNewPeliculaForm() {
 		this.main.empty();
 		console.log(this.categories.children());
 		if (this.categories.children().length > 1) this.categories.children()[1].remove();
-		let container = $(`<div id="new-formPelicula" class="container my-3"> <h1 class="display-5">Nueva Pelicula</h1> 
+		let container = $(`<div id="new-formPelicula" class="container my-3"> 
+		<h1 class="display-5">Nueva Pelicula</h1> 
 		 <form name="fNewFormPelicula" role="form" novalidate> 
 		 	<div class="form-row"> 
 		 		<div class="col-md-6 mb-3"> 
@@ -773,7 +776,8 @@ class VideoSystemgerView {
 						</div> 
 			 		</div>
 			  	</div>
-				<div class="col-md-6 mb-3"> <label for="ncNacionality">Nacionalidad *</label>
+				<div class="col-md-6 mb-3"> 
+					<label for="ncNacionality">Nacionalidad *</label>
 					<div class="input-group"> 
 						<div class="input-group-prepend"> <span class="input-group-text" id="nacionalityPrepend"><i class="fas fa-image"></i></span> 
 					</div> 
@@ -785,18 +789,19 @@ class VideoSystemgerView {
 						Correcto.
 					</div> 
 				</div> 
-				<div class="col-md-6 mb-3"> <label for="ncPublication">Publicacion *</label>
+				<div class="col-md-6 mb-3">
+					 <label for="ncPublication">Publicacion *</label>
 					<div class="input-group"> 
 						<div class="input-group-prepend"> <span class="input-group-text" id="publicationPrepend"><i class="fas fa-image"></i></span> 
+						</div> 
+						<input type="Publication" class="form-control" id="ncPublication" name="ncPublication" placeholder="10/11/2013" aria-describedby="publicationPrepend" value="" required> 
+						<div class="invalid-feedback">
+							La Nacinalidad no es válida.
+						</div> 
+						<div class="valid-feedback">
+							Correcto.
+						</div> 
 					</div> 
-					<input type="Publication" class="form-control" id="ncPublication" name="ncPublication" placeholder="10/11/2013" aria-describedby="publicationPrepend" value="" required> 
-					<div class="invalid-feedback">
-						La Nacinalidad no es válida.
-					</div> 
-					<div class="valid-feedback">
-						Correcto.
-					</div> 
-				</div> 
 				<div class="col-md-6 mb-3 ncImagen"> <label for="ncImagen">Imagen *</label>
 					<div class="input-group"> 
 						<div class="input-group-prepend"> <span class="input-group-text" id="imagenPrepend"><i class="fas fa-image"></i></span> 
@@ -812,29 +817,184 @@ class VideoSystemgerView {
 				<div class="col-md-6 mb-3 ncDuration"> <label for="ncDuration">Duracion *</label>
 					<div class="input-group"> 
 						<div class="input-group-prepend"> <span class="input-group-text" id="durationPrepend"><i class="fas fa-image"></i></span> 
+						</div> 
+						<input type="number" class="form-control" id="ncDuration" name="ncDuration" aria-describedby="durationPrepend" value="" required> 
+						<div class="invalid-feedback">
+							La Nacinalidad no es válida.
+						</div> 
+						<div class="valid-feedback">
+							Correcto.
+						</div> 
 					</div> 
-					<input type="number" class="form-control" id="ncDuration" name="ncDuration" aria-describedby="durationPrepend" value="" required> 
-					<div class="invalid-feedback">
-						La Nacinalidad no es válida.
+					<div class="col-md-6 mb-3 ncLink"> <label for="ncLink">Link *</label>
+						<div class="input-group"> 
+							<div class="input-group-prepend"> <span class="input-group-text" id="linkPrepend"><i class="fas fa-image"></i></span> 
+						</div> 
+						<input type="text" class="form-control" id="ncLink" name="ncLink" aria-describedby="linkPrepend" value="" required> 
+						<div class="invalid-feedback">
+							La Nacinalidad no es válida.
+						</div> 
+						<div class="valid-feedback">
+							Correcto.
+						</div> 
 					</div> 
-					<div class="valid-feedback">
-						Correcto.
-					</div> 
+				</div>
+			</div> 
+				<div class="form-row"> 
+					<div class="col-md-12 mb-3"> 
+						<label for="ncSynopsis">Synopsis</label> 
+						<div class="input-group"> 
+							<div class="input-group-prepend"> <span class="input-group-text" id="descPrepend">
+								<i class="fas fa-align-left"></i></span>
+				 			</div> 
+				 			<input type="text" class="form-control" id="ncSynopsis" name="ncSynopsis" aria-describedby="descPrepend" value="" required>
+				  			<div class="invalid-feedback">
+				  			</div> 
+				  			<div class="valid-feedback">
+								Correcto.
+							</div>
+				   		</div> 
+				   </div> 
+				</div>
+				<div class="form-row"> 
+					<div class="col-md-12 mb-3"> 
+						<label for="ncRec">Recurso</label> 
+						<div class="input-group"> 
+							<div class="input-group-prepend"> <span class="input-group-text" id="descPrepend">
+								<i class="fas fa-align-left"></i></span>
+				 			</div> 
+				 			<input type="text" class="form-control" id="ncRec" name="ncRec" aria-describedby="descPrepend" value="" required>
+				  			<div class="invalid-feedback">
+				  			</div> 
+				  			<div class="valid-feedback">
+								Correcto.
+							</div>
+				   		</div> 
+				   </div> 
 				</div> 
-				<div class="col-md-6 mb-3 ncLink"> <label for="ncLink">Link *</label>
-					<div class="input-group"> 
-						<div class="input-group-prepend"> <span class="input-group-text" id="linkPrepend"><i class="fas fa-image"></i></span> 
-					</div> 
-					<input type="text" class="form-control" id="ncLink" name="ncLink" aria-describedby="linkPrepend" value="" required> 
-					<div class="invalid-feedback">
-						La Nacinalidad no es válida.
-					</div> 
-					<div class="valid-feedback">
-						Correcto.
-					</div> 
-				</div> 
-			</div>
+				<div class="form-row"> 
+					<div class="col-md-12 mb-3"> 
+						<label for="ncLat">Latitud</label> 
+						<div class="input-group"> 
+							<div class="input-group-prepend"> <span class="input-group-text" id="descPrepend">
+								<i class="fas fa-align-left"></i></span>
+				 			</div> 
+				 			<input type="text" class="form-control" id="ncLat" name="ncLat" aria-describedby="descPrepend" value="" required>
+				  			<div class="invalid-feedback">
+				  			</div> 
+				  			<div class="valid-feedback">
+								Correcto.
+							</div>
+				   		</div> 
+						   <label for="ncLong">Longitud</label> 
+						   <div class="input-group"> 
+							   <div class="input-group-prepend"> <span class="input-group-text" id="descPrepend">
+								   <i class="fas fa-align-left"></i></span>
+								</div> 
+								<input type="text" class="form-control" id="ncLong" name="ncLong" aria-describedby="descPrepend" value="" required>
+								 <div class="invalid-feedback">
+								 </div> 
+								 <div class="valid-feedback">
+								   Correcto.
+							   	</div>
+							  </div> 
+				   </div> 
+			</div>  
+				   <button class="btn btn-primary" type="submit">Enviar</button> 
+				   <button class="btn btn-primary" type="reset">Cancelar</button> 
+			</form> 
 		</div> 
+		`);
+		this.main.append(container);
+	}
+	
+	showNewSerieForm() {
+		this.main.empty();
+		console.log(this.categories.children());
+		if (this.categories.children().length > 1) this.categories.children()[1].remove();
+		let container = $(`<div id="new-formPelicula" class="container my-3"> 
+		<h1 class="display-5">Nueva Pelicula</h1> 
+		 <form name="fNewFormPelicula" role="form" novalidate> 
+		 	<div class="form-row"> 
+		 		<div class="col-md-6 mb-3"> 
+		 			<label for="ncTitle">Título *</label> 
+		 			<div class="input-group">
+						<div class="input-group-prepend"> 
+							<span class="input-group-text" id="titlePrepend"> <i class="fas fa-heading"></i></span>
+						</div> 
+						<input type="text" class="form-control" id="ncTitle" name="ncTitle" placeholder="Título de producto" aria-describedby="titlePrepend" value="" required>
+						<div class="invalid-feedback">
+							El título es obligatorio.
+						</div>
+						<div class="valid-feedback">
+							Correcto.
+						</div> 
+			 		</div>
+			  	</div>
+				<div class="col-md-6 mb-3"> 
+					<label for="ncNacionality">Nacionalidad *</label>
+					<div class="input-group"> 
+						<div class="input-group-prepend"> <span class="input-group-text" id="nacionalityPrepend"><i class="fas fa-image"></i></span> 
+					</div> 
+					<input type="Nacionality" class="form-control" id="ncNacionality" name="ncNacionality" placeholder="Española" aria-describedby="nacionalityPrepend" value="" required> 
+					<div class="invalid-feedback">
+						La Nacinalidad no es válida.
+					</div> 
+					<div class="valid-feedback">
+						Correcto.
+					</div> 
+				</div> 
+				<div class="col-md-6 mb-3">
+					 <label for="ncPublication">Publicacion *</label>
+					<div class="input-group"> 
+						<div class="input-group-prepend"> <span class="input-group-text" id="publicationPrepend"><i class="fas fa-image"></i></span> 
+						</div> 
+						<input type="Publication" class="form-control" id="ncPublication" name="ncPublication" placeholder="10/11/2013" aria-describedby="publicationPrepend" value="" required> 
+						<div class="invalid-feedback">
+							La Nacinalidad no es válida.
+						</div> 
+						<div class="valid-feedback">
+							Correcto.
+						</div> 
+					</div> 
+				<div class="col-md-6 mb-3 ncImagen"> <label for="ncImagen">Imagen *</label>
+					<div class="input-group"> 
+						<div class="input-group-prepend"> <span class="input-group-text" id="imagenPrepend"><i class="fas fa-image"></i></span> 
+					</div> 
+					<input type="file" class="form-control" id="ncImagen" name="ncImagen" aria-describedby="imagenPrepend" value="" required> 
+					<div class="invalid-feedback">
+						La Nacinalidad no es válida.
+					</div> 
+					<div class="valid-feedback">
+						Correcto.
+					</div> 
+				</div> 
+				<div class="col-md-6 mb-3 ncDuration"> <label for="ncDuration">Duracion *</label>
+					<div class="input-group"> 
+						<div class="input-group-prepend"> <span class="input-group-text" id="durationPrepend"><i class="fas fa-image"></i></span> 
+						</div> 
+						<input type="number" class="form-control" id="ncDuration" name="ncDuration" aria-describedby="durationPrepend" value="" required> 
+						<div class="invalid-feedback">
+							La Nacinalidad no es válida.
+						</div> 
+						<div class="valid-feedback">
+							Correcto.
+						</div> 
+					</div> 
+					<div class="col-md-6 mb-3 ncLink"> <label for="ncLink">Link *</label>
+						<div class="input-group"> 
+							<div class="input-group-prepend"> <span class="input-group-text" id="linkPrepend"><i class="fas fa-image"></i></span> 
+						</div> 
+						<input type="text" class="form-control" id="ncLink" name="ncLink" aria-describedby="linkPrepend" value="" required> 
+						<div class="invalid-feedback">
+							La Nacinalidad no es válida.
+						</div> 
+						<div class="valid-feedback">
+							Correcto.
+						</div> 
+					</div> 
+				</div>
+			</div> 
 				<div class="form-row"> 
 					<div class="col-md-12 mb-3"> 
 						<label for="ncSynopsis">Synopsis</label> 
@@ -851,25 +1011,89 @@ class VideoSystemgerView {
 				   		</div> 
 				   </div> 
 				</div> 
+				<div class="form-row"> 
+					<div class="col-md-12 mb-3"> 
+						<label for="ncRec">Recurso</label> 
+						<div class="input-group"> 
+							<div class="input-group-prepend"> <span class="input-group-text" id="descPrepend">
+								<i class="fas fa-align-left"></i></span>
+				 			</div> 
+				 			<input type="text" class="form-control" id="ncRec" name="ncRec" aria-describedby="descPrepend" value="" required>
+				  			<div class="invalid-feedback">
+				  			</div> 
+				  			<div class="valid-feedback">
+								Correcto.
+							</div>
+				   		</div> 
+				   </div> 
+				</div> 
+				<div class="form-row"> 
+					<div class="col-md-12 mb-3"> 
+						<label for="ncLat">Latitud</label> 
+						<div class="input-group"> 
+							<div class="input-group-prepend"> <span class="input-group-text" id="descPrepend">
+								<i class="fas fa-align-left"></i></span>
+				 			</div> 
+				 			<input type="text" class="form-control" id="ncLat" name="ncLat" aria-describedby="descPrepend" value="" required>
+				  			<div class="invalid-feedback">
+				  			</div> 
+				  			<div class="valid-feedback">
+								Correcto.
+							</div>
+				   		</div> 
+						   <label for="ncLong">Longitud</label> 
+						   <div class="input-group"> 
+							   <div class="input-group-prepend"> <span class="input-group-text" id="descPrepend">
+								   <i class="fas fa-align-left"></i></span>
+								</div> 
+								<input type="text" class="form-control" id="ncLong" name="ncLong" aria-describedby="descPrepend" value="" required>
+								 <div class="invalid-feedback">
+								 </div> 
+								 <div class="valid-feedback">
+								   Correcto.
+							   	</div>
+							  </div> 
+				   </div> 
+				<div class="form-row"> 
+					<div class="col-md-12 mb-3"> 
+						<label for="ncTemp">Temporadas</label> 
+						<div class="input-group"> 
+							<div class="input-group-prepend"> <span class="input-group-text" id="descPrepend">
+								<i class="fas fa-align-left"></i></span>
+				 			</div> 
+				 			<input type="text" class="form-control" id="ncTemp" name="ncTemp" aria-describedby="descPrepend" value="" required>
+				  			<div class="invalid-feedback">
+				  			</div> 
+				  			<div class="valid-feedback">
+								Correcto.
+							</div>
+				   		</div> 
+				   </div> 
+				</div> 
 				   <button class="btn btn-primary" type="submit">Enviar</button> 
 				   <button class="btn btn-primary" type="reset">Cancelar</button> 
 			</form> 
 			</div> 
-		</div>`);
+		`);
 		this.main.append(container);
 	}
-	bindAdminMenu(hNewCategory,hRemoveCategory,hNewActor) {
+	bindAdminMenu(hNewCategory, hRemoveCategory, hNewProduct, hNewActor) {
 		$('#lnewCategory').click((event) => {
 			this.#excecuteHandler(hNewCategory, [],
 				'#new-category', { action: 'newCategory' },
 				'#', event);
 		});
-		('#ldelCategory').click((event) => {
+		$('#ldelCategory').click((event) => {
 			this.#excecuteHandler(hRemoveCategory, [],
 				'#remove-category', { action: 'removeCategory' },
 				'#', event);
 		});
-		('#lnewActor').click((event) => {
+		$('#lnewPelicula').click((event) => {
+			this.#excecuteHandler(hNewProduct, [],
+				'#new-actor', { action: 'newPelicula' },
+				'#', event);
+		});
+		$('#lnewActor').click((event) => {
 			this.#excecuteHandler(hNewActor, [],
 				'#new-actor', { action: 'newActor' },
 				'#', event);
@@ -921,61 +1145,60 @@ class VideoSystemgerView {
 		this.main.empty();
 		if (this.categories.children().length > 1) this.categories.children()[1].remove();
 		let container = $(`<div id="new-category" class="container my-3"> <h1 class="display-5">Nueva categoría</h1>
-		 <form name="fNewCategory" role="form" novalidate> 
-		 <div class="form-row"> 
-		 <div class="col-md-6 mb-3"> <label for="ncTitle">Título *</label> 
-		 <div class="input-group"> 
-		 <div class="input-group-prepend"> <span class="input-group-text" id="titlePrepend"><i class="fas fa-heading"></i></span> 
-		 </div> 
-		 <input type="text" class="form-control" id="ncTitle" name="ncTitle" placeholder="Título de categoría" aria-describedby="titlePrepend" value="" required> 
-		 <div class="invalid-feedback">
-		 El título es obligatorio.
-		 </div> 
-		 <div class="valid-feedback">
-		 Correcto.
-		 </div> 
-		 </div> 
-		 </div> 
-		 <div class="col-md-6 mb-3"> <label for="ncUrl">URL *</label> <div class="input-group"> 
-		 <div class="input-group-prepend"> <span class="input-group-text" id="urlPrepend"><i class="fas fa-image"></i></span> 
-		 </div> 
-		 <input type="url" class="form-control" id="ncUrl" name="ncUrl" placeholder="http://www.test.es" aria-describedby="urlPrepend" value="" required> <div class="invalid-feedback">
-		 La URL no es válida.
-		 </div> 
-		 <div class="valid-feedback">Correcto.
-		 </div> 
-		 </div> 
-		 </div> 
-		 </div>
-		  <div class="form-row"> 
-		  <div class="col-md-12 mb-3"> <label for="ncDescription">Descripción</label> 
-		  <div class="input-group"> <div class="input-group-prepend">
-		   <span class="input-group-text" id="descPrepend"><i class="fas fa-align-left"></i></span> 
-		   </div> 
-		<input type="text" class="form-control" id="ncDescription" name="ncDescription"
-		aria-describedby="descPrepend" value="" required> 
-		<div class="invalid-feedback">
-		</div> 
-		<div class="valid-feedback">
-		Correcto.
-		</div> 
-		</div> 
-		</div> 
+		 <form name="fNewCategory" id="name="fNewCategory"" role="form" novalidate> 
+			<div class="form-row"> 
+				<div class="col-md-6 mb-3"> 
+					<label for="ncTitle">Título *</label> 
+					<div class="input-group"> 
+						<div class="input-group-prepend"> <span class="input-group-text" id="titlePrepend">
+							<i class="fas fa-heading"></i></span> 
+						</div> 
+						<input type="text" class="form-control" id="ncTitle" name="ncTitle" placeholder="Título de categoría" aria-describedby="titlePrepend" value="" required> 
+						<div class="invalid-feedback">
+							El título es obligatorio.
+						</div> 
+						<div class="valid-feedback">
+							Correcto.
+						</div> 
+					</div> 
+				</div> 
+				
+			</div> 
+		</div>
+		<div class="form-row"> 
+			<div class="col-md-12 mb-3"> 
+				<label for="ncDescription">Descripción</label> 
+				<div class="input-group"> 
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="descPrepend"><i class="fas fa-align-left"></i></span> 
+					</div> 
+					<input type="text" class="form-control" id="ncDescription" name="ncDescription"
+					aria-describedby="descPrepend" value="" required> 
+					<div class="invalid-feedback">
+					</div> 
+					<div class="valid-feedback">
+						Correcto.
+					</div> 
+				</div> 
+			</div> 
 		</div> 
 		<button class="btn btn-primary" type="submit">Enviar</button> 
 		<button class="btn btn-primary" type="reset">Cancelar</button> 
-		</form> 
-		</div> 
-		</div>`);
+	</form> 
+</div> 
+`);
 		this.main.append(container);
 	}
 	showRemoveCategoryForm(categories) {
-		this.main.empty(); if (this.categories.children().length > 1) this.categories.children()[1].remove();
+		this.main.empty();
+		if (this.categories.children().length > 1) this.categories.children()[1].remove();
 		let container = $(`<div id="remove-category" class="container my-3"> <h1 class="display-5">Eliminar una categoría categoría</h1>
 		 	<div id="category-list" class="row">
 		 	</div> 
 		 </div>`);
-		let category = categories.next();
+		console.log(this.categories.children()[0]);
+		let category = $(categories).next();
+		console.log(category);
 		while (!category.done) {
 			container.children().nextAll('div').append(`<div class="cat col-lg-3 col-md-6">
 			<a data-category="${category.value.title}" href="#product-list">
@@ -1036,8 +1259,10 @@ class VideoSystemgerView {
 	bindNewCategoryForm(handler) {
 		newCategoryValidation(handler);
 	}
+	bindNewProductForm(handler) {
+		newPeliValidation(handler);
+	}
 
-	
 	showNewActorForm() {
 		this.main.empty();
 		if (this.categories.children().length > 1) this.categories.children()[1].remove();
@@ -1168,7 +1393,7 @@ class VideoSystemgerView {
 		this.main.append(container);
 	}
 
-	
+
 	showNewPersonForm() {
 		this.main.empty();
 		if (this.categories.children().length > 1) this.categories.children()[1].remove();
