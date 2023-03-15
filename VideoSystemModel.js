@@ -21,7 +21,7 @@ class Person {
         if (!name) throw new EmptyValueException("name", name);
         if (!lastname1) throw new EmptyValueException("lastname1", lastname1);
         if (!born) throw new EmptyValueException("born", born);
-        if (!/^(?:3[01]|[12][0-9]|0?[1-9])([\-/.])(0?[1-9]|1[1-2])\1\d{4}$/.test(born)) throw InvalidValueException("born", born);
+        //if (!/^(?:3[01]|[12][0-9]|0?[1-9])([\-/.])(0?[1-9]|1[1-2])\1\d{4}$/.test(born)) throw InvalidValueException("born", born);
         this.Name = name;
         this.Lastname1 = lastname1;
         this.Lastname2 = lastname2;

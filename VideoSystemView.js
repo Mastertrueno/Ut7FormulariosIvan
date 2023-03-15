@@ -771,14 +771,43 @@ class VideoSystemgerView {
 		</div>`);
 		li.append(container); this.menu.append(li);
 	}
-
-	showNewPeliculaForm() {
+	showNewElectionForm() {
+		this.main.empty();
+		let formu = $(`<select name="selector" id="selector onchange="fNewFormProduct">
+		<option value="0">Pelicula</option>
+		<option value="1">Serie</option>
+		</select>`);
+		formu.append(`</select> <button class="btn btn-primary" type="submit">Continuar</button>`);
+		container.append(formu);
+		this.main.append(container);
+	}
+	showNewPeliculaForm(categories,actors,directors) {
 		this.main.empty();
 		console.log(this.categories.children());
 		if (this.categories.children().length > 1) this.categories.children()[1].remove();
+
 		let container = $(`<div id="new-formPelicula" class="container my-3">
 		<h1 class="display-5">Nueva Pelicula</h1>
-		<form name="fNewFormPelicula" role="form" novalidate>
+		<form name="fNewFormPelicula" role="form" novalidate>`);
+		let li = $(`<select name="selec" id="categs">`);
+		//if (!category.done) shopping
+		for (let category of categories) {
+			li.append(`<option value="${category[0].Name}">${category[0].Name}</option>`);
+		}
+		li.append("</select>");
+		container.append(li);
+
+		let dir = $(`<h2>Director</h2>
+		`);
+		let direcs=$(`<select name="direcs" id="direcs">`);
+		//if (!category.done) shopping
+		for (let director of directors) {
+			direcs.append(`<option value="${director[0].Name}${director[0].Lastname1}${director[0].Lastname2}">${director[0].Name} ${director[0].Lastname1} ${director[0].Lastname2}</option>`);
+		}
+		direcs.append("</select>");
+		dir.append(direcs);
+		container.append(dir);
+		let p2 = (`
 			<div class="form-row">
 				<div class="col-md-6 mb-3">
 					<label for="ncTitle">Título *</label>
@@ -937,6 +966,7 @@ class VideoSystemgerView {
 		</form>
 	</div>
 		`);
+		container.append(p2);
 		this.main.append(container);
 	}
 
@@ -1192,6 +1222,78 @@ class VideoSystemgerView {
 			</div>`);
 		}
 	}
+	showNewActorModal(done, per, error) {
+		$(document.fNewActor).find('div.error').remove();
+		if (done) {
+			let modal = $(`<div class="modal fade" id="newActorModal" tabindex="-1" data-backdrop="static" data-keyboard="false" 
+			role="dialog" aria-labelledby="newActorModalLabel" aria-hidden="true"> 
+			<div class="modal-dialog" role="document"> <div class="modal-content"> 
+				<div class="modal-header"> <h5 class="modal-name" id="newActorModalLabel">Actor creado</h5> 
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"> 
+						<span aria-hidden="true">&times;</span> </button>
+		 		</div>
+		  		<div class="modal-body"> 
+		  			El actor <strong>${per.Name}</strong> ha sido creado correctamente.
+		   		</div>
+		    	<div class="modal-footer"> 
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button> 
+				</div> 
+			</div>
+		</div>
+		</div>`);
+			$('body').append(modal);
+			let newActorModal = $('#newActorModal');
+			newActorModal.modal('show');
+			newActorModal.find('button').click(() => {
+				newActorModal.on('hidden.bs.modal', function (event) {
+					document.fNewActor.reset();
+					document.fNewActor.ncNombre.focus();
+					this.remove();
+				});
+				newActorModal.modal('hide');
+			})
+		} else {
+			$(document.fNewActor).prepend(`<div class="error text-danger p-3">
+			<i class="fas fa-exclamation-triangle"></i> La categoría <strong>${cat.title}</strong> ya está creada.
+			</div>`);
+		}
+	}
+	showNewDirectorModal(done, per, error) {
+		$(document.fNewDirector).find('div.error').remove();
+		if (done) {
+			let modal = $(`<div class="modal fade" id="newDirectorModal" tabindex="-1" data-backdrop="static" data-keyboard="false" 
+			role="dialog" aria-labelledby="newDirectorModal" aria-hidden="true"> 
+			<div class="modal-dialog" role="document"> <div class="modal-content"> 
+				<div class="modal-header"> <h5 class="modal-name" id="newDirectorModalLabel">Director creado</h5> 
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"> 
+						<span aria-hidden="true">&times;</span> </button>
+		 		</div>
+		  		<div class="modal-body"> 
+		  			El director <strong>${per.Name}</strong> ha sido creado correctamente.
+		   		</div>
+		    	<div class="modal-footer"> 
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button> 
+				</div> 
+			</div>
+		</div>
+		</div>`);
+			$('body').append(modal);
+			let newDirectorModal = $('#newDirectorModal');
+			newDirectorModal.modal('show');
+			newDirectorModal.find('button').click(() => {
+				newDirectorModal.on('hidden.bs.modal', function (event) {
+					document.fNewDirector.reset();
+					document.fNewDirector.ncNombre.focus();
+					this.remove();
+				});
+				newDirectorModal.modal('hide');
+			})
+		} else {
+			$(document.fNewDirector).prepend(`<div class="error text-danger p-3">
+			<i class="fas fa-exclamation-triangle"></i> La categoría <strong>${cat.title}</strong> ya está creada.
+			</div>`);
+		}
+	}
 	showNewCategoryForm() {
 		this.main.empty();
 		if (this.categories.children().length > 1) this.categories.children()[1].remove();
@@ -1300,7 +1402,8 @@ class VideoSystemgerView {
 				let divCat = $('#remove-category').find(`div > div:nth-child(${position + 1})`);
 				divCat.remove();
 			})
-		} else {console.log(cat);
+		} else {
+			console.log(cat);
 			$('#removeCategoryModal').prepend(`<div class="error text-danger p-3">
 			<i class="fas fa-exclamation-triangle"></i> La categoría <strong>${cat.Name}</strong> no exite en la aplicacion.
 		</div>`);
@@ -1308,7 +1411,7 @@ class VideoSystemgerView {
 	}
 	bindRemoveCategoryForm(handler) {
 		$('#remove-category').find('button').click(function (event) {
-			handler(this.dataset.category, 
+			handler(this.dataset.category,
 				$(this).closest('div.cat').index());
 		})
 	}
@@ -1323,6 +1426,8 @@ class VideoSystemgerView {
 	}
 	bindNewActorForm(handler) {
 		newActorValidation(handler);
+		//console.log(tipo);
+		console.log(handler);
 	}
 	bindNewDirectorForm(handler) {
 		newDirectorValidation(handler);

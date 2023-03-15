@@ -724,7 +724,7 @@ class VideoSystemController {
         }
     }
     handleNewPeliculaForm = () => {
-        this.#VideoSystemView.showNewPeliculaForm();
+        this.#VideoSystemView.showNewPeliculaForm(this.#Videosystem.categories,this.#Videosystem.actors,this.#Videosystem.directors);
         //this.#VideoSystemView.bindNewPeliculaForm(handler)(newPeliValidation(handler));
         this.#VideoSystemView.bindNewPeliculaForm(this.handleCreatePelicula);
     }
@@ -736,12 +736,12 @@ class VideoSystemController {
     handleNewActorForm = () => {
         this.#VideoSystemView.showNewActorForm();
         //this.#VideoSystemView.bindNewActorForm(handler)(newCategoryValidation(handler));
-        this.#VideoSystemView.bindNewActorForm(this.handleCreatePerson);
+        this.#VideoSystemView.bindNewActorForm(this.handleCreateActor);
     }
     handleNewDirectorForm = () => {
         this.#VideoSystemView.showNewDirectorForm();
         //this.#VideoSystemView.bindNewCategoryForm(handler)(newCategoryValidation(handler));
-        this.#VideoSystemView.bindNewDirectorForm(this.handleCreatePerson);
+        this.#VideoSystemView.bindNewDirectorForm(this.handleCreateDirector);
     }
     handleNewCategoryForm = () => {
         this.#VideoSystemView.showNewCategoryForm();
@@ -772,16 +772,29 @@ class VideoSystemController {
         this.#VideoSystemView.showNewCategoryModal(done, ser, error);
         this.onAddCategory();
     }
-    handleCreatePerson = (name, lastname1, lastname2, born, picture) => {
+    handleCreateActor = (name, lastname1, lastname2, born, picture) => {
         let per = new Person(name, lastname1, lastname2, born, picture);
         let done, error;
+        //console.log(tipo);
         try {
-            this.#Videosystem.addProduction(per);
+            this.#Videosystem.addActor(per);
             done = true;
         } catch (exception) {
             done = false; error = exception;
         }
-        this.#VideoSystemView.showNewCategoryModal(done, per, error);
+        this.#VideoSystemView.showNewActorModal(done, per, error);
+        this.onAddCategory();
+    }
+    handleCreateDirector = (name, lastname1, lastname2, born, picture) => {
+        let per = new Person(name, lastname1, lastname2, born, picture);
+        let done, error;
+        try {
+            this.#Videosystem.addDirector(per);
+            done = true;
+        } catch (exception) {
+            done = false; error = exception;
+        }
+        this.#VideoSystemView.showNewDirectorModal(done, per, error);
         this.onAddCategory();
     }
     handleCreateCategory = (title, desc) => {
