@@ -768,6 +768,7 @@ class VideoSystemgerView {
 			<a id="ldelActor" class="dropdown-item" href="#new-actor">Eliminar actor</a>
 			<a id="lnewDirector" class="dropdown-item" href="#new-director">Crear Director</a>
 			<a id="ldelDirector" class="dropdown-item" href="#new-director">Eliminar director</a>
+			<a id="lAssignActor" class="dropdown-item" href="#assign-actor">Asignar actor</a>
 		</div>`);
 		li.append(container); this.menu.append(li);
 	}
@@ -781,7 +782,7 @@ class VideoSystemgerView {
 		container.append(formu);
 		this.main.append(container);
 	}
-	showNewPeliculaForm(categories,actors,directors) {
+	showNewPeliculaForm(categories, actors, directors) {
 		this.main.empty();
 		console.log(this.categories.children());
 		if (this.categories.children().length > 1) this.categories.children()[1].remove();
@@ -799,7 +800,7 @@ class VideoSystemgerView {
 
 		let dir = $(`<h2>Director</h2>
 		`);
-		let direcs=$(`<select name="direcs" id="direcs">`);
+		let direcs = $(`<select name="direcs" id="direcs">`);
 		//if (!category.done) shopping
 		for (let director of directors) {
 			direcs.append(`<option value="${director[0].Name}${director[0].Lastname1}${director[0].Lastname2}">${director[0].Name} ${director[0].Lastname1} ${director[0].Lastname2}</option>`);
@@ -1155,7 +1156,7 @@ class VideoSystemgerView {
 		`);
 		this.main.append(container);
 	}
-	bindAdminMenu(hNewCategory, hRemoveCategory, hNewPelicula, hNewSerie, hNewActor, hNewDirector) {
+	bindAdminMenu(hNewCategory, hRemoveCategory, hNewPelicula, hNewSerie, hNewActor, hNewDirector, hAssignActor) {
 		$('#lnewCategory').click((event) => {
 			this.#excecuteHandler(hNewCategory, [],
 				'#new-category', { action: 'newCategory' },
@@ -1184,6 +1185,11 @@ class VideoSystemgerView {
 		$('#lnewDirector').click((event) => {
 			this.#excecuteHandler(hNewDirector, [],
 				'#new-director', { action: 'newDirector' },
+				'#', event);
+		});
+		$('#lAssignActor').click((event) => {
+			this.#excecuteHandler(hAssignActor, [],
+				'#new-actor', { action: 'newActor' },
 				'#', event);
 		});
 	}
@@ -1432,6 +1438,7 @@ class VideoSystemgerView {
 	bindNewDirectorForm(handler) {
 		newDirectorValidation(handler);
 	}
+
 	showNewActorForm() {
 		this.main.empty();
 		if (this.categories.children().length > 1) this.categories.children()[1].remove();
@@ -1691,6 +1698,55 @@ class VideoSystemgerView {
 		</div> 
 		</div>`);
 		this.main.append(container);
+	}
+	showAssignPersonForm(actors, productions, videosystem) {
+		this.main.empty();
+		if (this.categories.children().length > 1) this.categories.children()[1].remove();
+		let container = $(`<div id="assign-person" class="container my-3"> <h1 class="display-5">Asignar Persona</h1>
+		 <form name="fAssignPerson" role="form" novalidate> 
+		 <div class="form-row"> 
+		 <div class="col-md-6 mb-3"> <label for="ncNombre">Actor *</label> 
+		 <div class="input-group"> 
+		 <div class="input-group-prepend"> <span class="input-group-text" id="nombrePrepend"><i class="fas fa-heading"></i></span> 
+		 </div> `);
+		let actores = $(`<select name="asignador" id="assingactor" >`);
+		for (let actor of actors) {
+			//console.log(actor[0]);
+			let opcion = (`<option value="${actor[0].Name} ${actor[0].Lastname1} ${actor[0].Lastname2}" id="${actor}">${actor[0].Name} ${actor[0].Lastname1} ${actor[0].Lastname2}</option>`);
+			actores.append(opcion);
+		}
+		actores.append(`</select>`);
+		container.append(actores);
+
+		let producciones = $(`<select name="asignado" id="assingprod">`);
+		for (let product of productions) {
+			//console.log(product.Title);
+			let opcion = (`<option value="${product}">${product.Title}</option>`);
+			//videosystem.getProductionsActor(act);
+			producciones.append(opcion);
+		}
+		producciones.append(`</select>`);
+		container.append(producciones);
+
+		let container2 = $(`<div class="invalid-feedback">
+		 El Nombre es obligatorio.
+		 </div> 
+		 <div class="valid-feedback">
+		 Correcto.
+		 </div> 
+		 </div> 
+		 </div> 
+		<button class="btn btn-primary" type="submit">Enviar</button> 
+		<button class="btn btn-primary" type="reset">Cancelar</button> 
+		</form> 
+		</div> 
+		</div>`);
+		container.append(container2)
+		this.main.append(container);
+	}
+	bindAssignForm(handler) {
+		let a=$("#assingactor").val();
+		console.log(a);
 	}
 }
 export default VideoSystemgerView;

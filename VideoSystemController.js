@@ -181,7 +181,8 @@ class VideoSystemController {
         this.onAddCategory();
         history.replaceState({ action: 'init' }, null);
         this.#VideoSystemView.showAdminMenu();
-        this.#VideoSystemView.bindAdminMenu(this.handleNewCategoryForm, this.handleRemoveCategoryForm, this.handleNewPeliculaForm, this.handleNewSerieForm, this.handleNewActorForm, this.handleNewDirectorForm);
+        this.#VideoSystemView.bindAdminMenu(this.handleNewCategoryForm, this.handleRemoveCategoryForm, this.handleNewPeliculaForm, 
+            this.handleNewSerieForm, this.handleNewActorForm, this.handleNewDirectorForm,this.handleAssignActorForm);
         
     }
     onInit = () => {
@@ -225,8 +226,9 @@ class VideoSystemController {
         this.#VideoSystemView.bindDirectorListInMenu(
             this.handleDirectorList
         );
-        this.#VideoSystemView.bindAdminMenu(this.handleNewCategoryForm, this.handleRemoveCategoryForm, this.handleNewPeliculaForm, this.handleNewSerieForm, this.handleNewActorForm, this.handleNewDirectorForm);
-    }
+        this.#VideoSystemView.bindAdminMenu(this.handleNewCategoryForm, this.handleRemoveCategoryForm, this.handleNewPeliculaForm, 
+            this.handleNewSerieForm, this.handleNewActorForm, this.handleNewDirectorForm,this.handleAssignActorForm);
+            }
 
     handleProductsTypeList = (type) => {
         if (VideoSystem[type]) {
@@ -748,8 +750,10 @@ class VideoSystemController {
         this.#VideoSystemView.bindNewCategoryForm(this.handleCreateCategory);
 
     }
-    handleCreatePelicula = (title, nacionality, publication, synopsis, img, resource, location) => {
-        let mov = new Movie(title, nacionality, publication, synopsis, img, resource, location);
+    handleCreatePelicula = (title, nacionality, publication, synopsis, img, dur,link, lat,long) => {
+        let res=new Resource(dur,link);
+        let location=new Coordinate(lat,long)
+        let mov = new Movie(title, nacionality, publication, synopsis, img, res, location);
         let done, error;
         try {
             this.#Videosystem.addProduction(mov);
@@ -760,7 +764,9 @@ class VideoSystemController {
         this.#VideoSystemView.showNewCategoryModal(done, mov, error);
         this.onAddCategory();
     }
-    handleCreateSerie = (title, nacionality, publication, synopsis, img, resource, location,temp) => {
+    handleCreateSerie = (title, nacionality, publication, synopsis, img, resource, lat,long,temp) => {
+        let res=new Resource(resource);
+        let location=new Coordinate(lat,long)
         let ser = new Serie(title, nacionality, publication, synopsis, img, resource, location,temp);
         let done, error;
         try {
@@ -841,5 +847,15 @@ class VideoSystemController {
     handleNewCategoryForm = () => {
         this.#VideoSystemView.showNewCategoryForm();
     }
+    handleAssignActorForm = () => {
+        this.#VideoSystemView.showAssignPersonForm(this.#Videosystem.actors,this.#Videosystem.productions,this.#Videosystem);
+        //this.#VideoSystemView.bindNewActorForm(handler)(newCategoryValidation(handler));
+        this.#VideoSystemView.bindAssignForm(this.handleAssignActorForm);
+
+    }
+    /* handleAssignActorForm = (formulario) => {
+        console.log(formulario)
+
+    } */
 }
 export default VideoSystemController;
