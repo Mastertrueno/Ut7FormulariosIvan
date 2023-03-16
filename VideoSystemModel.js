@@ -244,7 +244,7 @@ let VideoSystem = (
                     }
                 }
                 //añade una categoria a la lista
-                addCatecogy(catego) {
+                addCategory(catego) {
                     if (!catego) throw new EmptyValueException("catego", catego);
                     if (!(catego instanceof Category)) throw new InvalidAccessConstructorException("catego", catego);
                     /* let categ = [ // Array contiene objeto literal con la categoría y un array con las imágenes de esa categoría
@@ -469,7 +469,7 @@ let VideoSystem = (
                     }
                     //la añado si no lo hace
                     if (!existe) {
-                        this.addCatecogy(category);
+                        this.addCategory(category);
                         pos = this.#categories.length - 1;
                     }
                     existe = false;
@@ -1043,14 +1043,14 @@ for (const iterator of di) {
 }
 //meto datos por defecto
 v.addActor(act);
-v.addCatecogy(cat);
+v.addCategory(cat);
 v.addDirector(dir);
 v.addProduction(prod);
 v.addUser(user);
 
 //categorias
 console.log("Categorias");
-console.log(v.addCatecogy(cat2));
+console.log(v.addCategory(cat2));
 for (const iterator of ca) {
     console.log(iterator);
 }
@@ -1058,7 +1058,7 @@ console.log(v.removeCategory(cat2));
 for (const iterator of ca) {
     console.log(iterator);
 }
-console.log(v.addCatecogy(cat2));
+console.log(v.addCategory(cat2));
 for (const iterator of ca) {
     console.log(iterator);
 }

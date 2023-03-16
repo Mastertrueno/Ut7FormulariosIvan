@@ -71,9 +71,9 @@ class VideoSystemController {
         Videosystem.addDirector(dir7);
         Videosystem.addDirector(dir8);
 
-        Videosystem.addCatecogy(category1);
-        Videosystem.addCatecogy(category2);
-        Videosystem.addCatecogy(category3);
+        Videosystem.addCategory(category1);
+        Videosystem.addCategory(category2);
+        Videosystem.addCategory(category3);
 
         Videosystem.addProduction(prod);
         Videosystem.addProduction(prod2);
@@ -180,10 +180,7 @@ class VideoSystemController {
         );
         this.onAddCategory();
         history.replaceState({ action: 'init' }, null);
-        this.#VideoSystemView.showAdminMenu();
-        this.#VideoSystemView.bindAdminMenu(this.handleNewCategoryForm, this.handleRemoveCategoryForm, this.handleNewPeliculaForm, 
-            this.handleNewSerieForm, this.handleNewActorForm, this.handleNewDirectorForm,this.handleRemovePersonForm,this.handleAssignActorForm);
-        
+     
     }
     onInit = () => {
         // this.#VideoSystemView.ListCategories();
@@ -208,9 +205,11 @@ class VideoSystemController {
         for (let category of (this.#Videosystem.categories)) {
             console.log(category[0].Description);
         }
+        this.onInit();
         this.#VideoSystemView.showCategoriesInMenu(this.#Videosystem.categories);
         this.#VideoSystemView.showActorsInMenu();
         this.#VideoSystemView.showDirectorsInMenu();
+        this.#VideoSystemView.showAdminMenu();
         this.#VideoSystemView.bindProductsCategoryListInMenu(
             this.handleProductionsCategoryList
         );
@@ -226,10 +225,10 @@ class VideoSystemController {
         this.#VideoSystemView.bindDirectorListInMenu(
             this.handleDirectorList
         );
-        this.#VideoSystemView.bindAdminMenu(this.handleNewCategoryForm, this.handleRemoveCategoryForm, this.handleNewPeliculaForm, 
-            this.handleNewSerieForm, this.handleNewActorForm, this.handleNewDirectorForm,this.handleRemovePersonForm,this.handleAssignActorForm);
-        
-            }
+        this.#VideoSystemView.bindAdminMenu(this.handleNewCategoryForm, this.handleRemoveCategoryForm, this.handleNewPeliculaForm,
+            this.handleNewSerieForm, this.handleNewActorForm, this.handleNewDirectorForm, this.handleRemovePersonForm, this.handleAssignActorForm);
+
+    }
 
     handleProductsTypeList = (type) => {
         if (VideoSystem[type]) {
@@ -461,18 +460,18 @@ class VideoSystemController {
         this.#VideoSystemView.bindProductsPerson(
             this.handleProductionPerson
         );
-       /*  this.#VideoSystemView.bindProductsCategoryList(
-            this.handleProductionsCategoryList
-        );
-        this.#VideoSystemView.bindProductsList(
-            this.handleAletProductionList
-        );
-        this.#VideoSystemView.bindActorListInMenu(
-            this.handleActorList
-        );
-        this.#VideoSystemView.bindDirectorListInMenu(
-            this.handleDirectorList
-        ); */
+        /*  this.#VideoSystemView.bindProductsCategoryList(
+             this.handleProductionsCategoryList
+         );
+         this.#VideoSystemView.bindProductsList(
+             this.handleAletProductionList
+         );
+         this.#VideoSystemView.bindActorListInMenu(
+             this.handleActorList
+         );
+         this.#VideoSystemView.bindDirectorListInMenu(
+             this.handleDirectorList
+         ); */
 
         //}
 
@@ -563,21 +562,21 @@ class VideoSystemController {
         this.#VideoSystemView.bindActorsProd(
             this.handleActorProd
         );
-    /*     this.#VideoSystemView.bindActorListInMenu(
-            this.handleActorList
-        );
-        this.#VideoSystemView.bindDirectorListInMenu(
-            this.handleDirectorList
-        );
-        this.#VideoSystemView.bindProductsCategoryList(
-            this.handleProductionsCategoryList
-        );
-        this.#VideoSystemView.bindProducts(
-            this.handleProduction
-        );
-        this.#VideoSystemView.bindProductsList(
-            this.handleAletProductionList
-        ); */
+        /*     this.#VideoSystemView.bindActorListInMenu(
+                this.handleActorList
+            );
+            this.#VideoSystemView.bindDirectorListInMenu(
+                this.handleDirectorList
+            );
+            this.#VideoSystemView.bindProductsCategoryList(
+                this.handleProductionsCategoryList
+            );
+            this.#VideoSystemView.bindProducts(
+                this.handleProduction
+            );
+            this.#VideoSystemView.bindProductsList(
+                this.handleAletProductionList
+            ); */
 
 
     }
@@ -727,7 +726,7 @@ class VideoSystemController {
         }
     }
     handleNewPeliculaForm = () => {
-        this.#VideoSystemView.showNewPeliculaForm(this.#Videosystem.categories,this.#Videosystem.actors,this.#Videosystem.directors);
+        this.#VideoSystemView.showNewPeliculaForm(this.#Videosystem.categories, this.#Videosystem.actors, this.#Videosystem.directors);
         //this.#VideoSystemView.bindNewPeliculaForm(handler)(newPeliValidation(handler));
         this.#VideoSystemView.bindNewPeliculaForm(this.handleCreatePelicula);
     }
@@ -751,9 +750,9 @@ class VideoSystemController {
         this.#VideoSystemView.bindNewCategoryForm(this.handleCreateCategory);
 
     }
-    handleCreatePelicula = (title, nacionality, publication, synopsis, img, dur,link, lat,long) => {
-        let res=new Resource(dur,link);
-        let location=new Coordinate(lat,long)
+    handleCreatePelicula = (title, nacionality, publication, synopsis, img, dur, link, lat, long) => {
+        let res = new Resource(dur, link);
+        let location = new Coordinate(lat, long)
         let mov = new Movie(title, nacionality, publication, synopsis, img, res, location);
         let done, error;
         try {
@@ -765,10 +764,10 @@ class VideoSystemController {
         this.#VideoSystemView.showNewCategoryModal(done, mov, error);
         this.onAddCategory();
     }
-    handleCreateSerie = (title, nacionality, publication, synopsis, img, resource, lat,long,temp) => {
-        let res=new Resource(resource);
-        let location=new Coordinate(lat,long)
-        let ser = new Serie(title, nacionality, publication, synopsis, img, resource, location,temp);
+    handleCreateSerie = (title, nacionality, publication, synopsis, img, resource, lat, long, temp) => {
+        let res = new Resource(resource);
+        let location = new Coordinate(lat, long)
+        let ser = new Serie(title, nacionality, publication, synopsis, img, resource, location, temp);
         let done, error;
         try {
             this.#Videosystem.addProduction(ser);
@@ -808,74 +807,81 @@ class VideoSystemController {
         console.log(title);
         let cat = new Category(title, desc);
         //cat.description = desc;
-         let done, error;
-         console.log(cat);
+        let done, error;
+        console.log(cat);
         try {
             this.#Videosystem.addCategory(cat);
             done = true;
         } catch (exception) {
             done = false; error = exception;
         }
+        console.log($("#navbarResponsive").children());
+        for (let index = 0; index < 3; index++) {
+            $("#navbarResponsive").children().last().children().empty();
+            
+        }
+        this.onInit();
+        this.onAddCategory();
         this.#VideoSystemView.showNewCategoryModal(done, cat, error);
     }
     handleRemoveCategoryForm = () => {
-       /*  for (let category of this.#Videosystem.categories) {
-            console.log(category);
-            
-        } */
+        /*  for (let category of this.#Videosystem.categories) {
+             console.log(category);
+             
+         } */
         this.#VideoSystemView.showRemoveCategoryForm(this.#Videosystem.categories);
         this.#VideoSystemView.bindRemoveCategoryForm(this.handleRemoveCategory);
 
     }
     handleRemovePersonForm = () => {
 
-         this.#VideoSystemView.showRemovePersonForm(this.#Videosystem.actors,this.#Videosystem.directors);
-         this.#VideoSystemView.bindRemovePersonForm(this.handleRemovePerson);
- 
-     }
-     handleRemovePerson = (name, position) => {
+        this.#VideoSystemView.showRemovePersonForm(this.#Videosystem.actors, this.#Videosystem.directors);
+        this.#VideoSystemView.bindRemovePersonForm(this.handleRemovePerson);
+
+    }
+    handleRemovePerson = (name, position) => {
         let done, error, per;
         try {
             console.log(position);
             console.log(name);
             for (let actor of this.#Videosystem.actors) {
                 //console.log(actor);
-                let actorname=actor[0].Name+" "+actor[0].Lastname1+" "+actor[0].Lastname2;
+                let actorname = actor[0].Name + " " + actor[0].Lastname1 + " " + actor[0].Lastname2;
                 /* console.log(name);
                 console.log(actorname); */
-                if(actorname==name){
+                if (actorname == name) {
                     per = actor[0];
-                    let prods= this.#Videosystem.getProductionsActor(actor[0]);
-                   // console.log(per);
-                    let productions=[];
+                    let prods = this.#Videosystem.getProductionsActor(actor[0]);
+                    // console.log(per);
+                    let productions = [];
                     for (let prod of prods) {
                         //console.log(prod);
-                       productions.push(prod)
-                        
+                        productions.push(prod)
+
                     }
-                    this.#Videosystem.deassignActor(per,productions);
+                    this.#Videosystem.deassignActor(per, productions);
                     this.#Videosystem.removeActor(per);
                 }
             }
             for (let director of this.#Videosystem.directors) {
                 //console.log(director);
-                let directorname=director[0].Name+" "+director[0].Lastname1+" "+director[0].Lastname2;
+                let directorname = director[0].Name + " " + director[0].Lastname1 + " " + director[0].Lastname2;
                 /* console.log(name);
                 console.log(directorname); */
-                if(directorname==name){
+                if (directorname == name) {
                     per = director[0];
-                    let prods= this.#Videosystem.getProductionsDirector(director[0]);
+                    let prods = this.#Videosystem.getProductionsDirector(director[0]);
                     for (let prod of prods) {
-                       /*  console.log(prod);
-                        console.log(per); */
-                        this.#Videosystem.deassignDirector(per,prod);
+                        /*  console.log(prod);
+                         console.log(per); */
+                        this.#Videosystem.deassignDirector(per, prod);
                     }
                     this.#Videosystem.removeDirector(per);
                 }
             }
             console.log(per);
             done = true;
-           //this.onAddCategory();
+            //this.onAddCategory();
         } catch (exception) {
             done = false;
             error = exception;
@@ -883,17 +889,17 @@ class VideoSystemController {
         }
         console.log(done);
         this.#VideoSystemView.showRemovePersonModal(done, per, position, error);
-    } 
+    }
     handleRemoveCategory = (title, position) => {
         let done, error, cat;
         try {
             console.log(title);
             for (let category of this.#Videosystem.categories) {
-                if(category[0].Name==title){
+                if (category[0].Name == title) {
                     cat = category[0];
                 }
             }
-           
+
             console.log(cat);
             this.#Videosystem.removeCategory(cat);
             done = true;
@@ -908,7 +914,7 @@ class VideoSystemController {
         this.#VideoSystemView.showNewCategoryForm();
     } */
     handleAssignActorForm = () => {
-        this.#VideoSystemView.showAssignPersonForm(this.#Videosystem.actors,this.#Videosystem.productions,this.#Videosystem);
+        this.#VideoSystemView.showAssignPersonForm(this.#Videosystem.actors, this.#Videosystem.productions, this.#Videosystem);
         //this.#VideoSystemView.bindNewActorForm(handler)(newCategoryValidation(handler));
         this.#VideoSystemView.bindAssignForm(this.handleAssignActorForm);
 

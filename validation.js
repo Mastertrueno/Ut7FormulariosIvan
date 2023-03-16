@@ -210,7 +210,7 @@ function newCategoryValidation(handler) {
     $(form).submit(function (event) {
         let isValid = true;
         let firstInvalidElement = null;
-        this.ncDescription.value = this.ncDescription.value.trim();
+       // this.ncDescription.value = this.ncDescription.value.trim();
         showFeedBack($(this.ncDescription), true);
 
         if (!this.ncName.checkValidity()) {
@@ -219,6 +219,13 @@ function newCategoryValidation(handler) {
             firstInvalidElement = this.ncName;
         } else {
             showFeedBack($(this.ncName), true);
+        }
+        if (!this.ncDescription.checkValidity()) {
+            isValid = false;
+            showFeedBack($(this.ncDescription), false);
+            firstInvalidElement = this.ncDescription;
+        } else {
+            showFeedBack($(this.ncDescription), true);
         }
         if (!isValid) {
             firstInvalidElement.focus();

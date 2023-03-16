@@ -1229,7 +1229,7 @@ class VideoSystemgerView {
 			})
 		} else {
 			$(document.fNewCategory).prepend(`<div class="error text-danger p-3">
-			<i class="fas fa-exclamation-triangle"></i> La categoría <strong>${cat.title}</strong> ya está creada.
+			<i class="fas fa-exclamation-triangle"></i> La categoría <strong>${cat.Name}</strong> ya está creada.
 			</div>`);
 		}
 	}
