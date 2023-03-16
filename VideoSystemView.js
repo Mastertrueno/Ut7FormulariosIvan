@@ -765,9 +765,8 @@ class VideoSystemgerView {
 			<a id="lnewSerie" class="dropdown-item" href="#new-product">Crear serie</a>
 			<a id="ldelSerie" class="dropdown-item" href="#new-product">Eliminar serie</a> 
 			<a id="lnewActor" class="dropdown-item" href="#new-actor">Crear actor</a>
-			<a id="ldelActor" class="dropdown-item" href="#new-actor">Eliminar actor</a>
 			<a id="lnewDirector" class="dropdown-item" href="#new-director">Crear Director</a>
-			<a id="ldelDirector" class="dropdown-item" href="#new-director">Eliminar director</a>
+			<a id="ldelPerson" class="dropdown-item" href="#new-director">Eliminar Persona</a>
 			<a id="lAssignActor" class="dropdown-item" href="#assign-actor">Asignar actor</a>
 		</div>`);
 		li.append(container); this.menu.append(li);
@@ -1156,7 +1155,7 @@ class VideoSystemgerView {
 		`);
 		this.main.append(container);
 	}
-	bindAdminMenu(hNewCategory, hRemoveCategory, hNewPelicula, hNewSerie, hNewActor, hNewDirector, hAssignActor) {
+	bindAdminMenu(hNewCategory, hRemoveCategory, hNewPelicula, hNewSerie, hNewActor, hNewDirector,hRemovePerson, hAssignActor) {
 		$('#lnewCategory').click((event) => {
 			this.#excecuteHandler(hNewCategory, [],
 				'#new-category', { action: 'newCategory' },
@@ -1187,6 +1186,11 @@ class VideoSystemgerView {
 				'#new-director', { action: 'newDirector' },
 				'#', event);
 		});
+		$('#ldelPerson').click((event) => {
+			this.#excecuteHandler(hRemovePerson, [],
+				'#new-director', { action: 'newDirector' },
+				'#', event);
+		});
 		$('#lAssignActor').click((event) => {
 			this.#excecuteHandler(hAssignActor, [],
 				'#new-actor', { action: 'newActor' },
@@ -1196,6 +1200,7 @@ class VideoSystemgerView {
 
 	showNewCategoryModal(done, cat, error) {
 		$(document.fNewCategory).find('div.error').remove();
+		console.log(cat);
 		if (done) {
 			let modal = $(`<div class="modal fade" id="newCategoryModal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="newCategoryModalLabel" aria-hidden="true"> 
 			<div class="modal-dialog" role="document"> <div class="modal-content"> 
@@ -1204,7 +1209,7 @@ class VideoSystemgerView {
 						<span aria-hidden="true">&times;</span> </button>
 		 		</div>
 		  		<div class="modal-body"> 
-		  			La categoría <strong>${cat.title}</strong> ha sido creada correctamente.
+		  			La categoría <strong>${cat.Name}</strong> ha sido creada correctamente.
 		   		</div>
 		    	<div class="modal-footer"> 
 					<button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button> 
@@ -1218,7 +1223,7 @@ class VideoSystemgerView {
 			newCategoryModal.find('button').click(() => {
 				newCategoryModal.on('hidden.bs.modal', function (event) {
 					document.fNewCategory.reset();
-					document.fNewCategory.ncTitle.focus();
+					document.fNewCategory.ncName.focus();
 					this.remove();
 				}); newCategoryModal.modal('hide');
 			})
@@ -1307,15 +1312,15 @@ class VideoSystemgerView {
 		<form name="fNewCategory"  role="form" novalidate>
 		<div class="form-row">
 			<div class="col-md-6 mb-3">
-				<label for="ncTitle">Título *</label>
+				<label for="ncName">Nombre *</label>
 				<div class="input-group">
-					<div class="input-group-prepend"> <span class="input-group-text" id="titlePrepend">
+					<div class="input-group-prepend"> <span class="input-group-text" id="namePrepend">
 							<i class="fas fa-heading"></i></span>
 					</div>
-					<input type="text" class="form-control" id="ncTitle" name="ncTitle" placeholder="Título de categoría"
-						aria-describedby="titlePrepend" value="" required>
+					<input type="text" class="form-control" id="ncName" name="ncName" placeholder="Nombre de categoría"
+						aria-describedby="namePrepend" value="" required>
 					<div class="invalid-feedback">
-						El título es obligatorio.
+						El nombre es obligatorio.
 					</div>
 					<div class="valid-feedback">
 						Correcto.
@@ -1415,9 +1420,57 @@ class VideoSystemgerView {
 		</div>`);
 		}
 	}
+	showRemovePersonModal(done, per, position, error) {
+		$('remove-category').find('div.error').remove();
+		if (done) {
+			let modal = $(`<div class="modal fade" id="removePersonModal" tabindex="-1" data-backdrop="static"
+			data-keyboard="false" role="dialog" aria-labelledby="removePersonModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="removePersonModalLabel">Persona eliminada</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						La persona <strong>${per.Name}</strong> ha sido eliminada correctamente.
+					</div>
+					<div class="modal-footer"> <button type="button" class="btn btn-primary" data-dismiss="modal">
+							Aceptar
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>`); $('body').append(modal);
+			let removePersonModal = $('#removePersonModal');
+			removePersonModal.modal('show');
+			removePersonModal.find('button').click(() => {
+				removePersonModal.on('hidden.bs.modal', function (event) {
+					this.remove();
+				});
+				removePersonModal.modal('hide');
+				let divCat = $('#remove-person').find(`div > div:nth-child(${position+1})`);
+				divCat.remove();
+			})
+		} else {
+			console.log(per);
+			$('#removeCategoryModal').prepend(`<div class="error text-danger p-3">
+			<i class="fas fa-exclamation-triangle"></i> La categoría <strong>${per.Name}</strong> no exite en la aplicacion.
+		</div>`);
+		}
+	}
 	bindRemoveCategoryForm(handler) {
 		$('#remove-category').find('button').click(function (event) {
 			handler(this.dataset.category,
+				$(this).closest('div.cat').index());
+		})
+	}
+	bindRemovePersonForm(handler) {
+		console.log($('#remove-person').find('button'));
+		$('#remove-person').find('button').click(function (event) {
+			console.log(this.dataset.person);
+			handler(this.dataset.person,
 				$(this).closest('div.cat').index());
 		})
 	}
@@ -1633,7 +1686,48 @@ class VideoSystemgerView {
 	</div>`);
 		this.main.append(container);
 	}
+	showRemovePersonForm(actors, directors) {
+		this.main.empty();
+		console.log("entra")
+		//if (this.categories.children().length > 1) this.categories.children()[1].remove();
+		let container = $(`<div id="remove-person" class="container my-3"> <h1 class="display-5">Eliminar una persona</h1>
+		 	<div id="person-list" class="row">
+		 	</div> 
+		 </div>`);
+		let persons = [];
+		console.log(this.categories.children());
+		for (let actor of actors) {
+			//console.log(actor[0]);
+			persons.push(actor[0]);
+		}
+		let val = true;
+		for (let director of directors) {
+			for (let index = 0; index < persons.length; index++) {
+				if (persons[index] == director[0]) {
+					val = false;
+				}
 
+			}
+			if (val) {
+				persons.push(director[0]);
+			}
+		}
+		console.log(persons);
+		for (let index = 0; index < persons.length; index++) {
+			container.children().nextAll('div').append(`<div class="cat col-lg-3 col-md-6">
+			<a data-person=">${persons[index]}" href="#product-list">
+			 	
+			 	<div class="cat-list-text"> 
+				<h3>${persons[index].Name} ${persons[index].Lastname1} ${persons[index].Lastname2}</h3> 
+			 		<div><button class="btn btn-primary" data-person="${persons[index].Name} ${persons[index].Lastname1} ${persons[index].Lastname2}" type='button'>Eliminar</button>
+					</div> 
+				</div> 
+				</a> 
+		</div>`);
+		}
+		//this.categories.append(container);
+		this.main.append(container);
+	}
 
 	showNewPersonForm() {
 		this.main.empty();
@@ -1745,8 +1839,42 @@ class VideoSystemgerView {
 		this.main.append(container);
 	}
 	bindAssignForm(handler) {
-		let a=$("#assingactor").val();
+		let a = $("#assingactor").val();
 		console.log(a);
+	}
+	showAssignPersonForm(actors, productions, videosystem) {
+		this.main.empty();
+		if (this.categories.children().length > 1) this.categories.children()[1].remove();
+		let container = $(`<div id="assign-person" class="container my-3"> <h1 class="display-5">Asignar Persona</h1>
+		 <form name="fAssignPerson" role="form" novalidate> 
+		 <div class="form-row"> 
+		 <div class="col-md-6 mb-3"> <label for="ncNombre">Actor *</label> 
+		 <div class="input-group"> 
+		 <div class="input-group-prepend"> <span class="input-group-text" id="nombrePrepend"><i class="fas fa-heading"></i></span> 
+		 </div> `);
+		let actores = $(`<select name="asignador" id="assingactor" >`);
+		for (let actor of actors) {
+			//console.log(actor[0]);
+			let opcion = (`<option value="${actor[0].Name} ${actor[0].Lastname1} ${actor[0].Lastname2}" id="${actor}">${actor[0].Name} ${actor[0].Lastname1} ${actor[0].Lastname2}</option>`);
+			actores.append(opcion);
+		}
+		actores.append(`</select>`);
+		container.append(actores);
+		let container2 = $(`<div class="invalid-feedback">
+		 El Nombre es obligatorio.
+		 </div> 
+		 <div class="valid-feedback">
+		 Correcto.
+		 </div> 
+		 </div> 
+		 </div> 
+		<button class="btn btn-primary" type="submit">Enviar</button> 
+		<button class="btn btn-primary" type="reset">Cancelar</button> 
+		</form> 
+		</div> 
+		</div>`);
+		container.append(container2)
+		this.main.append(container);
 	}
 }
 export default VideoSystemgerView;

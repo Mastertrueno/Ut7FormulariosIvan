@@ -213,17 +213,17 @@ function newCategoryValidation(handler) {
         this.ncDescription.value = this.ncDescription.value.trim();
         showFeedBack($(this.ncDescription), true);
 
-        if (!this.ncTitle.checkValidity()) {
+        if (!this.ncName.checkValidity()) {
             isValid = false;
-            showFeedBack($(this.ncTitle), false);
-            firstInvalidElement = this.ncTitle;
+            showFeedBack($(this.ncName), false);
+            firstInvalidElement = this.ncName;
         } else {
-            showFeedBack($(this.ncTitle), true);
+            showFeedBack($(this.ncName), true);
         }
         if (!isValid) {
             firstInvalidElement.focus();
         } else {
-            handler(this.ncTitle.value, this.ncDescription.value);
+            handler(this.ncName.value, this.ncDescription.value);
         } event.preventDefault();
         event.stopPropagation();
     });
@@ -233,7 +233,7 @@ function newCategoryValidation(handler) {
 		let inputs = $(this).find('input');
 		inputs.removeClass('is-valid is-invalid');
 	}));
-    $(form.ncTitle).change(defaultCheckElement);
+    $(form.ncName).change(defaultCheckElement);
     $(form.ncDescription).change(defaultCheckElement);
 }
 function newActorValidation(handler) {
